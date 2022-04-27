@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Haushaltsbuch</title>
+    <link rel="stylesheet" href="../static/styles/form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    {% if data != None %}
+    <container class="form-container">
+      <form class="" action="{{ url_for('edit_page', entry_id=data.id) }}" method="POST">
+        <label for="category">Kategorie</label>
+        <select class="input" name="category" onChange="addHideClass(this, 'new-category-input')">
+          <option name="new-category" value="hide-value" selected="selected">[neue Kategorie]</option>
+          <option value="test">test</option>
+        </select>
+        <label class="new-category-input" for="new-category-name">Name der Kategorie</label>
+        <input class="new-category-input" type="text" name="new-category" value="">
+        <button class="new-category-input" type="submit" formaction="" name="button">erstellen</button>
+        <br>
+        <label for="payee">Zahlungsempfänger</label>
+        <input type="text" name="payee" value="{{ data.name }}">
+        <br>
+        <label for="fee">Betrag</label>
+        <input type="text" name="fee" value="{{ data.amount }}" onkeyup="addDots(this)">
+        <label for="">€</label>
+        <br>
+        <label for="debit-date">Abbuchungsdatum</label>
+        <input type="date" name="debit-date" value="{{ data.debit_date }}" min="2022-01-01" max="2022-12-31">
+        <br>
+        <label for="payment-interval">Abbuchungsinterval</label>
+        <select class="input" name="payment-interval" onChange="addHideClass(this, 'individual-dialogue')">
+          {% if data.payment_interval == "annual" %}
+          <option value="annual" selected="selected">Jährlich</option>
+          {% else %}
+          <option value="annual">Jährlich</option>
+          {% endif %}
+          {% if data.payment_interval == "half-yearly" %}
+          <option value="half-yearly" selected="selected">Halbjährlich</option>
+          {% else %}
+          <option value="half-yearly">Halbjährlich</option>
+          {% endif %}
+          {% if data.payment_interval == "quarterly" %}
+          <option value="quarterly" selected="selected">Vierteljährlich</option>
+          {% else %}
+          <option value="quarterly">Vierteljährlich</option>
+          {% endif %}
+          {% if data.payment_interval == "monthly" %}
+          <option value="monthly" selected="selected">Monatlich</option>
+          {% else %}
+          <option value="monthly">Monatlich</option>
+          {% endif %}
+          <option value="hide-value">Andere</option>
+        </select>
+        <label class="individual-dialogue hide-individual-options" for="optional">alle: </label>
+        <input class="individual-dialogue hide-individual-options" type="text" name="optional-number" value="">
+        <select class="individual-dialogue hide-individual-options" name="optional-choice">
+          <option value="days">Tage</option>
+          <option value="weeks">Wochen</option>
+          <option value="months">Monate</option>
+        </select>
+        <br>
+        <button type="submit" name="button">senden</button>
+      </form>
+    </container>
+
+  <!--
+    {% else %}
+    <form class="" action="{{ url_for('add_page') }}" method="POST">
+      <label for="category">Kategorie</label>
+      <select name="category" onChange="addHideClass(this, 'new-category-input')">
+        <option name="new-category" value="hide-value" selected="selected">[neue Kategorie]</option>
+        <option value="test">test</option>
+      </select>
+      <label class="new-category-input" for="new-category-name">Name der Kategorie</label>
+      <input class="new-category-input" type="text" name="new-category" value="">
+      <button class="new-category-input" type="submit" formaction="" name="button">erstellen</button>
+      <br>
+      <label for="payee">Zahlungsempfänger</label>
+      <input type="text" name="payee" value="">
+      <br>
+      <label for="fee">Betrag</label>
+      <input type="text" name="fee" value="" onkeyup="addDots(this)">
+      <label for="">€</label>
+      <br>
+      <label for="debit-date">Abbuchungsdatum</label>
+      <input type="date" name="debit-date" value="" min="2022-01-01" max="2022-12-31">
+      <br>
+      <label for="payment-interval">Abbuchungsinterval</label>
+      <select name="payment-interval" onChange="addHideClass(this, 'individual-dialogue')">
+        <option value="annual">Jährlich</option>
+        <option value="half-yearly">Halbjährlich</option>
+        <option value="quarterly">Vierteljährlich</option>
+        <option value="monthly">Monatlich</option>
+        <option value="hide-value">Andere</option>
+      </select>
+      <label class="individual-dialogue hide-individual-options" for="optional">alle: </label>
+      <input class="individual-dialogue hide-individual-options" type="text" name="optional-number" value="">
+      <select class="individual-dialogue hide-individual-options" name="optional-choice">
+        <option value="days">Tage</option>
+        <option value="weeks">Wochen</option>
+        <option value="months">Monate</option>
+      </select>
+      <br>
+      <button type="submit" name="button">senden</button>
+    </form>
+    {% endif %}
+  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/form.js" charset="utf-8"></script>
+  </body>
+</html>

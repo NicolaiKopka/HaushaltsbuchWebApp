@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Haushaltsbuch</title>
+    <link rel="stylesheet" href="../static/styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="header">
+      <p>Header Section</p>
+    </div>
+
+    <div class="options-container">
+      <a href="{{ url_for('overview_page') }}">
+        <div class="overview options">
+          <div class="fonts inside-div">
+            <i class="fa-solid fa-list fa-5x"></i>
+          </div>
+          <div class="options-paragraph inside-div">
+            <p>Überblick über alle Einträge</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="{{ url_for('add_page') }}">
+        <div class="add-remove-page options">
+          <div class="fonts inside-div">
+            <i class="fa-solid fa-screwdriver-wrench fa-5x"></i>
+          </div>
+          <div class="options-paragraph inside-div">
+            <p>Bearbeiten der Einträge</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="#">
+        <div class="current-month options">
+          <div class="fonts inside-div">
+            <i class="fa-solid fa-calendar-day fa-5x"></i>
+          </div>
+          <div class="options-paragraph inside-div">
+            <p>Aktuelle Monatsübersicht</p>
+          </div>
+        </div>
+      </a>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+.hide-individual-options {
+  visibility: hidden;
+}
+
+input {
+  border-radius: 10px;
+}
+
+br {
+  margin-bottom: 5rem;
+}
+
+
+.form-container {
+  text-align: center;
+  font-size: 2rem;
+  display: grid;
+  grid-gap: 1.5rem;
+}
+
+.input {
+  border-radius: 10px;
+}

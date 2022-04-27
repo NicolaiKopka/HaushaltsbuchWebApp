@@ -1,0 +1,57 @@
+body {
+  background-color: #EFFFFD;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  opacity: 0.5;
+}
+
+.options-container {
+
+}
+
+.options {
+  margin: 4rem;
+  display: inline-block;
+  width: 15rem;
+  height: 20rem;
+  border-radius: 14px;
+
+}
+
+.options-paragraph {
+  font-family: "Ubunut", sans-serif;
+  font-weight: 700;
+}
+
+.overview{
+  background-color: #42C2FF;
+
+}
+
+.table {
+  size: 30rem;
+}
+
+.add-remove-page {
+  background-color: #85F4FF;
+}
+
+.current-month {
+  background-color: #B8FFF9;
+}
+
+.inside-div {
+  display: flex;
+  justify-content: center;
+  padding-top: 25%;
+}
+
+.fonts {
+  width: 15rem;
+}

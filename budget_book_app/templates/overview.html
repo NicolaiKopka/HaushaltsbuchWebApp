@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <h1>Überblick</h1>
+
+    <table>
+      <tr>
+        <th>data[0].__tablename__ </th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Betrag</th>
+        <th>Abbuchungsdatum</th>
+        <th>Interval</th>
+        <th>Bearbeiten</th>
+      </tr>
+      {% for entry in data %}
+      <tr>
+        <td>{{ entry.name }}</td>
+        <td>{{ entry.amount }} €</td>
+        <td>{{ entry.debit_date }}</td>
+        <td>{{ entry.payment_interval }}</td>
+        <td><a href="{{ url_for('edit_page', entry_id=entry.id) }}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+        <td><a href="{{ url_for('delete_entry', entry_id=entry.id) }}"><i class="fa-solid fa-trash-can"></i></a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
