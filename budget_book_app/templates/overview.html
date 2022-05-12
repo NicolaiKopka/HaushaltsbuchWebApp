@@ -3,14 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="../static/styles/overview.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <h1>Überblick</h1>
 
+    {% for key in data %}
     <table>
       <tr>
-        <th>data[0].__tablename__ </th>
+        <th>{{ key }}</th>
       </tr>
       <tr>
         <th>Name</th>
@@ -19,7 +21,7 @@
         <th>Interval</th>
         <th>Bearbeiten</th>
       </tr>
-      {% for entry in data %}
+      {% for entry in data[key]: %}
       <tr>
         <td>{{ entry.name }}</td>
         <td>{{ entry.amount }} €</td>
@@ -30,5 +32,11 @@
       </tr>
       {% endfor %}
     </table>
+    {% endfor %}
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/overview.js" charset="utf-8"></script>
   </body>
 </html>

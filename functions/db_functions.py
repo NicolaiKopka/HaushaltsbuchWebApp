@@ -3,6 +3,11 @@ from budget_book_app.models import Entries
 from budget_book_app import db
 from flask import request
 
+# constant of category list
+
+CATEGORY_LIST = []
+
+# adds entry to database if send is clicked in webapp
 
 def add_entry():
     name = request.form["payee"]
@@ -21,6 +26,8 @@ def add_entry():
     db.session.commit()
 
 
+# updates database entry chosen in the overview section of the webapp
+
 def update_entry(entry):
     entry.name = request.form["payee"]
     date_string = request.form["debit-date"]
@@ -33,19 +40,37 @@ def update_entry(entry):
     db.session.commit()
 
 
+# deletes database entry chosen in the overview section of the webapp
+
 def delete_entry(entry):
     db.session.delete(entry)
     db.session.commit()
 
 
+# converts the database entry to respective format (English missing) and returns dict with keys of categories
+# and values containing a list of db objects per category
+
 def get_formatted_data():
-    data = Entries.query.all()
+    data = Entries.query.order_by(Entries.category).all()
+
     page_settings = "de"
     if page_settings == "de":
         for elm in data:
             format_data_germany(elm)
-    return data
 
+    dict_of_db_entries = {}
+
+    for category in CATEGORY_LIST:
+        current_elm_list = []
+        for elm in data:
+            if elm.category == category:
+                current_elm_list.append(elm)
+        dict_of_db_entries[category] = current_elm_list
+
+    return dict_of_db_entries
+
+
+# returns database entry chosen in the overview section of the webapp
 
 def get_entry_by_id(entry_id):
     data = Entries.query.get(entry_id)
@@ -56,6 +81,15 @@ def get_entry_by_id(entry_id):
 
     return data
 
+
+def create_category_list():
+    data = Entries.query.order_by(Entries.category).all()
+    for elm in data:
+        if elm.category not in CATEGORY_LIST:
+            CATEGORY_LIST.append(elm.category)
+
+
+# format function used by get_formatted_data
 
 def format_data_germany(elm):
 
