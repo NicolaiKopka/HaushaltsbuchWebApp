@@ -1,6 +1,6 @@
 from budget_book_app import app, test
 from flask import render_template, request, url_for
-from functions import db_functions
+from functions import db_functions, archive_functions
 
 
 @app.route("/")
@@ -21,7 +21,8 @@ def add_page():
 
 @app.route("/overview")
 def overview_page():
-    #test.add_test_entries()
+    # test.add_test_entries()
+    # test.add_test_bank_status()
     data = db_functions.get_formatted_data()
     return render_template("overview.html", data=data)
 
@@ -42,6 +43,12 @@ def delete_entry(entry_id):
     entry = db_functions.get_entry_by_id(entry_id)
     db_functions.delete_entry(entry)
     return overview_page()
+
+
+@app.route("/push_to_archive")
+def push_to_archive():
+    archive_functions.add_entries_by_current_month()
+    return render_template("index.html")
 
 
 

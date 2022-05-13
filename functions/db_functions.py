@@ -2,6 +2,7 @@ import datetime
 from budget_book_app.models import Entries
 from budget_book_app import db
 from flask import request
+from working_data_functions import repeats_yearly
 
 # constant of category list
 
@@ -10,6 +11,9 @@ CATEGORY_LIST = []
 # adds entry to database if send is clicked in webapp
 
 def add_entry():
+    category = request.form.get("category")
+    if category == "hide-value":
+        category = request.form["new-category"]
     name = request.form["payee"]
     date_string = request.form["debit-date"]
     debit_date = datetime.date( int(date_string.split("-")[0]),
@@ -18,17 +22,23 @@ def add_entry():
     amount_string = request.form["fee"]
     amount = float(amount_string.replace(".", "").replace(",", "."))
     payment_interval = request.form["payment-interval"]
-    data = Entries( name=name,
+    data = Entries( category=category,
+                    name=name,
                     debit_date=debit_date,
                     amount=amount,
                     payment_interval=payment_interval)
     db.session.add(data)
     db.session.commit()
+    create_category_list()
 
 
 # updates database entry chosen in the overview section of the webapp
 
 def update_entry(entry):
+    category = request.form.get("category")
+    if category == "hide-value":
+        category = request.form["new-category"]
+    entry.category = category
     entry.name = request.form["payee"]
     date_string = request.form["debit-date"]
     entry.debit_date = datetime.date( int(date_string.split("-")[0]),
@@ -38,6 +48,7 @@ def update_entry(entry):
     entry.amount = float(amount_string.replace(".", "").replace(",", "."))
     entry.payment_interval = request.form["payment-interval"]
     db.session.commit()
+    create_category_list()
 
 
 # deletes database entry chosen in the overview section of the webapp
@@ -45,6 +56,7 @@ def update_entry(entry):
 def delete_entry(entry):
     db.session.delete(entry)
     db.session.commit()
+    create_category_list()
 
 
 # converts the database entry to respective format (English missing) and returns dict with keys of categories
@@ -84,9 +96,15 @@ def get_entry_by_id(entry_id):
 
 def create_category_list():
     data = Entries.query.order_by(Entries.category).all()
+    current_categories = []
     for elm in data:
+        current_categories.append(elm.category)
+
         if elm.category not in CATEGORY_LIST:
             CATEGORY_LIST.append(elm.category)
+    for category in CATEGORY_LIST:
+        if category not in current_categories:
+            CATEGORY_LIST.remove(category)
 
 
 # format function used by get_formatted_data
@@ -121,6 +139,7 @@ def format_data_germany(elm):
     new_amount_list.reverse()
     formatted_amount = "".join([str(item) for item in new_amount_list])
     elm.amount = formatted_amount + "," + amount_cent
+
 
 
 
